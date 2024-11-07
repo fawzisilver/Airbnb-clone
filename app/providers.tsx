@@ -1,4 +1,5 @@
 "use client";
+import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "./theme-provider";
 
 function Providers({
@@ -8,6 +9,7 @@ function Providers({
 }) {
 	return (
 		<>
+			<Toaster />
 			<ThemeProvider
 				attribute="class"
 				defaultTheme="system"
