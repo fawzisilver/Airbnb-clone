@@ -21,7 +21,7 @@ function FormContainer({
 		console.log("State", state);
 		if (state.message) {
 			console.log("Triggering toast with message: ", state.message);
-			toast({ title: "Success", description: state.message });
+			toast({ description: state.message });
 		}
 	}, [state]);
 	return <form action={formAction}>{children}</form>;

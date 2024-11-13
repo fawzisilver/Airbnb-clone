@@ -1,18 +1,7 @@
 import { SubmitButton } from "@/components/form/SubmitButton";
 import FormContainer from "@/components/form/FormContainer";
 import FormInput from "@/components/form/Forminput";
-
-const createProfileAction = async (prevState: any, formData: FormData) => {
-	"use server";
-	const firstName = formData.get("firstName") as string;
-	const lastName = formData.get("lastname") as string;
-	const username = formData.get("username") as string;
-
-	console.log("Form Data:", { firstName, lastName, username });
-	console.log("Action triggered");
-	console.log("Form data ", formData);
-	return { message: "Profile Created" };
-};
+import { createProfileAction } from "@/app/utils/actions";
 
 function CreateProfilePage() {
 	return (
@@ -22,7 +11,7 @@ function CreateProfilePage() {
 				<FormContainer action={createProfileAction}>
 					<div className="grid md:grid-cols-2 gap-4 mt-4">
 						<FormInput type="text" name="firstname" label="First Name" />
-						<FormInput type="text" name="lirstname" label="Last Name" />
+						<FormInput type="text" name="lastname" label="Last Name" />
 						<FormInput type="text" name="username" label="UserName" />
 					</div>
 					<SubmitButton text="Create Profile" className="mt-8" />
