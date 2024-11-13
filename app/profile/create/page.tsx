@@ -25,9 +25,9 @@ function CreateProfilePage() {
 						<FormInput type="text" name="lirstname" label="Last Name" />
 						<FormInput type="text" name="username" label="UserName" />
 					</div>
+					<SubmitButton text="Create Profile" className="mt-8" />
 				</FormContainer>
 			</div>
-			<SubmitButton text="Create Profile" className="mt-8" />
 		</section>
 	);
 }
