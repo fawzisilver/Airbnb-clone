@@ -9,7 +9,7 @@ type FormInputProps = {
 	placeholder?: string;
 };
 
-function Forminput(props: FormInputProps) {
+function FormInput(props: FormInputProps) {
 	const { label, name, type, defaultValue, placeholder } = props;
 
 	return (
@@ -29,4 +29,4 @@ function Forminput(props: FormInputProps) {
 	);
 }
 
-export default Forminput;
+export default FormInput;
