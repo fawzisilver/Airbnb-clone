@@ -1,12 +1,40 @@
 "use server";
 
-import { profileSchema } from "./schemas";
+import { profileSchema, validateWithZodSchema } from "./schemas";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { clerkClient } from "@clerk/nextjs/server";
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import db from "./db";
+
+//==============================HELPER FUNCTIONS ============================================
+// utility function for logged in user
+const getAuthUser = async () => {
+	const user = await currentUser();
+	if (!user) throw new Error("Must be logged to access this route");
+
+	// user.privateMetadata.hasProfile does not exist then redirect
+	if (!user.privateMetadata.hasProfile) redirect("/profile/create");
+
+	return user;
+};
+
+// If error occurs
+const renderError = (error: unknown): { message: string } => {
+	console.log(error);
+	return { message: error instanceof Error ? error.message : "An error occurred" };
+};
+
+const inputData = (raw: FormData) => {
+	const rawData = Object.fromEntries(raw);
+	const validateData = profileSchema.safeParse(rawData);
+
+	if (!validateData) return null;
+
+	return validateData;
+};
+//==========================================================================
 
 // calls this function when submitted and processes it (create profile)
 export const createProfileAction = async (prevState: any, formData: FormData) => {
@@ -18,7 +46,8 @@ export const createProfileAction = async (prevState: any, formData: FormData) =>
 		// turns data into objects
 		const rawData = Object.fromEntries(formData);
 		// validate user data with zod
-		const validatedFields = profileSchema.parse(rawData);
+		const validatedFields = validateWithZodSchema(profileSchema, rawData);
+
 		// create profile based on currentUser info
 		await db.profile.create({
 			data: {
@@ -35,8 +64,7 @@ export const createProfileAction = async (prevState: any, formData: FormData) =>
 			},
 		});
 	} catch (error) {
-		console.log(error);
-		return { message: error instanceof Error ? error.message : "An error occurred" };
+		return renderError(error);
 	}
 	// after execution of try (try/catch) we redirect to homepage
 	redirect("/");
@@ -60,4 +88,39 @@ export const fetchProfileImage = async () => {
 	});
 
 	return profile?.profileImage;
+};
+
+export const fetchProfile = async () => {
+	const user = await getAuthUser();
+	const profile = await db.profile.findUnique({
+		where: {
+			clerkId: user.id,
+		},
+	});
+	if (!profile) redirect("/profile/create");
+	return profile;
+};
+
+export const updateProfileAction = async (
+	prevState: any,
+	formData: FormData
+): Promise<{ message: string }> => {
+	const user = await getAuthUser();
+
+	try {
+		const rawData = Object.fromEntries(formData);
+		const validatedFields = validateWithZodSchema(profileSchema, rawData);
+
+		await db.profile.update({
+			where: {
+				clerkId: user.id,
+			},
+			data: validatedFields, //new updated data
+		});
+
+		revalidatePath("/profile"); //rerun again
+		return { message: "Profile updated successfully" };
+	} catch (error) {
+		return renderError(error);
+	}
 };
