@@ -2,8 +2,15 @@ import { SubmitButton } from "@/components/form/SubmitButton";
 import FormContainer from "@/components/form/FormContainer";
 import FormInput from "@/components/form/Forminput";
 import { createProfileAction } from "@/app/utils/actions";
+import { currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
-function CreateProfilePage() {
+async function CreateProfilePage() {
+	// get current or active user
+	const user = await currentUser();
+	// if user, privateMetadata and hasProfile exist, go homepage
+	if (user?.privateMetadata?.hasProfile) redirect("/");
+
 	return (
 		<section>
 			<h1 className="text-2xl font-semibold mb-8 capitalize">new user</h1>
