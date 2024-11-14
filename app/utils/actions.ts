@@ -35,3 +35,23 @@ export const createProfileAction = async (prevState: any, formData: FormData) =>
 
 	redirect("/");
 };
+
+export const fetchProfileImage = async () => {
+	// get current active user
+	const user = await currentUser();
+
+	// if user doesnt exist
+	if (!user) return null;
+
+	// get profile from database
+	const profile = await db.profile.findUnique({
+		where: {
+			clerkId: user.id,
+		},
+		select: {
+			profileImage: true,
+		},
+	});
+
+	return profile?.profileImage;
+};
