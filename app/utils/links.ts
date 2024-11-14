@@ -2,7 +2,7 @@ type NavLink = {
 	href: string;
 	label: string;
 };
-
+// routes for the application
 export const links: NavLink[] = [
 	{ href: "/", label: "home" },
 	{ href: "/favorites", label: "favorites" },

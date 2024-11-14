@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-
+// prevents instanting multiple connections
 const prismaClientSingleton = () => {
 	return new PrismaClient();
 };
