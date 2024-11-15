@@ -10,7 +10,6 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
 	experimental: {
 		serverActions: {
-			bodySizeLimit: "1mb",
 			allowedOrigins: ["*"],
 		},
 	},
@@ -19,6 +18,10 @@ const nextConfig: NextConfig = {
 			{
 				protocol: "https",
 				hostname: "img.clerk.com",
+			},
+			{
+				protocol: "https",
+				hostname: "vgpdwckvqarryuwksmwe.supabase.co",
 			},
 		],
 	},

@@ -7,6 +7,10 @@ import { clerkClient } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import db from "./db";
+import { uploadImage } from "./supabase";
+import { log } from "console";
+
+uploadImage;
 
 //==============================HELPER FUNCTIONS ============================================
 // utility function for logged in user
@@ -130,9 +134,24 @@ export const updateProfileImageAction = async (
 	prevState: any,
 	formData: FormData
 ): Promise<{ message: string }> => {
-	const image = formData.get("image") as File;
-	const validatedFields = validateWithZodSchema(imageSchema, { image });
-	console.log(validatedFields);
+	const user = await getAuthUser();
 
-	return { message: "Profile image updated successfully" };
+	try {
+		const image = formData.get("image") as File;
+		const validatedFields = validateWithZodSchema(imageSchema, { image });
+		const fullPath = await uploadImage(validatedFields.image);
+
+		await db.profile.update({
+			where: {
+				clerkId: user.id,
+			},
+			data: {
+				profileImage: fullPath,
+			},
+		});
+		revalidatePath("/profile");
+		return { message: "Profile image updated successfully" };
+	} catch (error) {
+		return renderError(error);
+	}
 };

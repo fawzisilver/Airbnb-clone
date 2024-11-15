@@ -19,7 +19,7 @@ export function validateWithZodSchema<T>(schema: ZodSchema<T>, data: unknown): T
 	// if validatedFields is not success
 	if (!result.success) {
 		const errors = result.error.errors.map((error) => error.message);
-		throw new Error(errors.join(", "));
+		throw new Error(errors.join(","));
 	}
 
 	return result.data;
@@ -32,7 +32,7 @@ export const imageSchema = z.object({
 
 function validateFile() {
 	const maxUploadSize = 1024 * 1024;
-	const acceptedFilesTypes = ["images/"];
+	const acceptedFilesTypes = ["image/"];
 	return z
 		.instanceof(File)
 		.refine((file) => {
