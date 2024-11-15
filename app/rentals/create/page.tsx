@@ -4,6 +4,8 @@ import { createPropertyAction } from "@/app/utils/actions";
 import { SubmitButton } from "@/components/form/SubmitButton";
 
 import React from "react";
+import PriceInput from "@/components/form/PriceInput";
+import CategoriesInput from "@/components/form/CategoriesInput";
 
 function CreatePropertyPage() {
 	return (
@@ -26,7 +28,9 @@ function CreatePropertyPage() {
 							defaultValue="Dream Getaway Awaits You here"
 						/>
 						{/**price */}
+						<PriceInput />
 						{/** categories */}
+						<CategoriesInput />
 					</div>
 					{/**text area / description */}
 					<SubmitButton text="Create Rental" className="mt-12" />
