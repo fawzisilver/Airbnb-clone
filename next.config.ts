@@ -14,6 +14,14 @@ const nextConfig: NextConfig = {
 			allowedOrigins: ["*"],
 		},
 	},
+	images: {
+		remotePatterns: [
+			{
+				protocol: "https",
+				hostname: "img.clerk.com",
+			},
+		],
+	},
 };
 
 export default nextConfig;
