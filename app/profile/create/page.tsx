@@ -4,6 +4,7 @@ import FormInput from "@/components/form/Forminput";
 import { createProfileAction } from "@/app/utils/actions";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import CounterInput from "@/components/form/CounterInput";
 
 async function CreateProfilePage() {
 	// get current or active user
@@ -21,9 +22,11 @@ async function CreateProfilePage() {
 						<FormInput type="text" name="lastname" label="Last Name" />
 						<FormInput type="text" name="username" label="UserName" />
 					</div>
+
 					<SubmitButton text="Create Profile" className="mt-8" />
 				</FormContainer>
 			</div>
+			{/* <CounterInput /> */}
 		</section>
 	);
 }

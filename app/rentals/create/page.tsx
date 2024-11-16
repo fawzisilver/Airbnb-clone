@@ -7,6 +7,9 @@ import React from "react";
 import PriceInput from "@/components/form/PriceInput";
 import CategoriesInput from "@/components/form/CategoriesInput";
 import TextInputArea from "@/components/form/TextAreaInput";
+import CountriesInput from "@/components/form/CountriesInput";
+import ImageInput from "@/components/form/ImageInput";
+import CounterInput from "@/components/form/CounterInput";
 
 function CreatePropertyPage() {
 	return (
@@ -35,6 +38,19 @@ function CreatePropertyPage() {
 					</div>
 					{/**text area / description */}
 					<TextInputArea name="description" labelText="Description (10 - 1000)" />
+
+					{/** Countries select */}
+					<div className="grid sm:grid-cols-2 gap-8">
+						<CountriesInput />
+						<ImageInput />
+					</div>
+
+					{/** Accomodation details */}
+					<h3 className="text-lg mt-8 mb-4 font-medium">Accomodation Details</h3>
+					<CounterInput detail="guests" />
+					<CounterInput detail="bedrooms" />
+					<CounterInput detail="beds" />
+					<CounterInput detail="baths" />
 					<SubmitButton text="Create Rental" className="mt-12" />
 				</FormContainer>
 			</div>
