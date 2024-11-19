@@ -1,5 +1,5 @@
-import { Label } from "@/components/ui/label";
 import { formattedCountries } from "@/app/utils/countries";
+import { Label } from "@/components/ui/label";
 import {
 	Select,
 	SelectContent,
@@ -8,13 +8,13 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 
-function CountriesInput({ defaultValue }: { defaultValue?: string }) {
-	const name = "country";
+const name = "country";
 
+function CountriesInput({ defaultValue }: { defaultValue?: string }) {
 	return (
 		<div className="mb-2">
 			<Label htmlFor={name} className="capitalize">
-				{name}
+				country
 			</Label>
 
 			<Select
@@ -26,11 +26,11 @@ function CountriesInput({ defaultValue }: { defaultValue?: string }) {
 					<SelectValue />
 				</SelectTrigger>
 				<SelectContent>
-					{formattedCountries.map((country) => {
+					{formattedCountries.map((item) => {
 						return (
-							<SelectItem key={country.code} value={country.code}>
+							<SelectItem key={item.code} value={item.code}>
 								<span className="flex items-center gap-2">
-									{country.flag} {country.name}
+									{item.flag} {item.name}
 								</span>
 							</SelectItem>
 						);
@@ -40,5 +40,4 @@ function CountriesInput({ defaultValue }: { defaultValue?: string }) {
 		</div>
 	);
 }
-
 export default CountriesInput;

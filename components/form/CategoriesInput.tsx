@@ -7,15 +7,10 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { Item } from "@radix-ui/react-dropdown-menu";
 
-const name = "categories";
+const name = "category";
 
-type CategoryInputProp = {
-	defaultValue?: string;
-};
-
-function CategoriesInput({ defaultValue }: CategoryInputProp) {
+function CategoriesInput({ defaultValue }: { defaultValue?: string }) {
 	return (
 		<div className="mb-2">
 			<Label htmlFor={name} className="capitalize">
@@ -30,11 +25,11 @@ function CategoriesInput({ defaultValue }: CategoryInputProp) {
 					<SelectValue />
 				</SelectTrigger>
 				<SelectContent>
-					{categories.map((category) => {
+					{categories.map((item) => {
 						return (
-							<SelectItem key={category.label} value={category.label}>
+							<SelectItem key={item.label} value={item.label}>
 								<span className="flex items-center gap-2">
-									<category.icon /> {category.label}
+									<item.icon /> {item.label}
 								</span>
 							</SelectItem>
 						);
@@ -44,5 +39,4 @@ function CategoriesInput({ defaultValue }: CategoryInputProp) {
 		</div>
 	);
 }
-
 export default CategoriesInput;

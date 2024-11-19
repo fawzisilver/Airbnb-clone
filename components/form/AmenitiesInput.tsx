@@ -1,21 +1,16 @@
 "use client";
-
 import { useState } from "react";
+// import { amenities, Amenity } from '@/utils/amenities';
 import { amenities, Amenity } from "@/app/utils/amenities";
 import { Checkbox } from "@/components/ui/checkbox";
 
-type AmenityProps = {
-	defaultValue: Amenity[];
-};
-
-function AmenitiesInput({ defaultValue }: AmenityProps) {
-	const [selectedAnemities, setSelectedAnemities] = useState<Amenity[]>(
+function AmenitiesInput({ defaultValue }: { defaultValue?: Amenity[] }) {
+	const [selectedAmenities, setSelectedAmenities] = useState<Amenity[]>(
 		defaultValue || amenities
 	);
-
 	const handleChange = (amenity: Amenity) => {
-		setSelectedAnemities((prevAmen) => {
-			return prevAmen.map((a) => {
+		setSelectedAmenities((prev) => {
+			return prev.map((a) => {
 				if (a.name === amenity.name) {
 					return { ...a, selected: !a.selected };
 				}
@@ -29,18 +24,16 @@ function AmenitiesInput({ defaultValue }: AmenityProps) {
 			<input
 				type="hidden"
 				name="amenities"
-				value={JSON.stringify(selectedAnemities)}
+				value={JSON.stringify(selectedAmenities)}
 			/>
-
 			<div className="grid grid-cols-2 gap-4">
-				{selectedAnemities.map((amenity) => {
+				{selectedAmenities.map((amenity) => {
 					return (
 						<div key={amenity.name} className="flex items-center space-x-2">
 							<Checkbox
 								id={amenity.name}
 								checked={amenity.selected}
 								onCheckedChange={() => handleChange(amenity)}
-								className="rounded"
 							/>
 							<label
 								htmlFor={amenity.name}
@@ -55,5 +48,4 @@ function AmenitiesInput({ defaultValue }: AmenityProps) {
 		</section>
 	);
 }
-
 export default AmenitiesInput;

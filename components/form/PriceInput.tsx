@@ -1,9 +1,7 @@
-import React from "react";
-import { Label } from "../ui/label";
+// const name = Prisma.PropertyScalarFieldEnum.price
+import { Label } from "@/components/ui/label";
 import { Input } from "../ui/input";
 import { Prisma } from "@prisma/client";
-
-// const name = Prisma.PropertyScalarFieldEnum.price (same as const name = 'price')
 
 type PriceInputProps = {
 	defaultValue?: number;
@@ -27,5 +25,4 @@ function PriceInput({ defaultValue }: PriceInputProps) {
 		</div>
 	);
 }
-
 export default PriceInput;
