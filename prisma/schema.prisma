@@ -37,7 +37,7 @@ model Property {
   price         Int
   guests        Int
   bedrooms      Int
-  bed           Int
+  beds          Int
   baths         Int
   amenities     String
   createdAt     DateTime  @default(now())
