@@ -1,5 +1,5 @@
 "use client";
-import { SignOutButton } from "@clerk/nextjs";
+import { SignOutButton } from "@clerk/nextjs/";
 import { useToast } from "@/hooks/use-toast";
 
 const SignOutLink = () => {

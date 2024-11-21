@@ -8,23 +8,19 @@ import { Suspense } from "react";
 //   search?: string
 // }
 
-function HomePage({
+async function HomePage({
 	searchParams,
 }: {
 	searchParams: { category?: string; search?: string };
 }) {
 	console.log(searchParams);
+
+	const { category, search } = await searchParams;
 	return (
 		<section>
-			<CategoriesList
-				category={searchParams.category}
-				search={searchParams.search}
-			/>
+			<CategoriesList category={category} search={search} />
 			<Suspense fallback={<LoadingCards />}>
-				<PropertiesContainer
-					category={searchParams.category}
-					search={searchParams.search}
-				/>
+				<PropertiesContainer category={category} search={search} />
 			</Suspense>
 		</section>
 	);
