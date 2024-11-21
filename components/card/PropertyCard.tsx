@@ -15,7 +15,7 @@ function PropertyCard({ property }: { property: PropertyCardProps }) {
 					<Image
 						src={image}
 						fill
-						// sizes="(max-width:768px) 100vw, 50vw"
+						sizes="(max-width:768px) 100vw, 50vw"
 						alt={name}
 						className="rounded-md object-cover transform group-hover:scale-110 transition-transform duration-500"
 					/>
@@ -34,9 +34,13 @@ function PropertyCard({ property }: { property: PropertyCardProps }) {
 						/night
 					</p>
 					{/** country and flag */}
+					<CountryFlagAndName countryCode={country} />
 				</div>
 			</Link>
-			<div className="absolute top-5 right z-5">{/** favorite toggle button */}</div>
+			<div className="absolute top-5 right-5 z-5">
+				{/** favorite toggle button */}
+				<FavoriteToggleButton propertyId={propertyId} />
+			</div>
 		</article>
 	);
 }
