@@ -13,8 +13,6 @@ async function HomePage({
 }: {
 	searchParams: { category?: string; search?: string };
 }) {
-	console.log(searchParams);
-
 	const { category, search } = await searchParams;
 	return (
 		<section>
