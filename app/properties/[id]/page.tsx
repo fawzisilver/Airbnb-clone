@@ -11,11 +11,18 @@ import { Separator } from "@/components/ui/separator";
 import Description from "@/components/properties/Description";
 import { redirect } from "next/navigation";
 import Amenities from "@/components/properties/Amenities";
-import DynamicMap from "@/app/utils/DynamicMap";
+// import DynamicMap from "@/app/utils/DynamicMap";
+import dynamic from "next/dynamic";
+import { Skeleton } from "@/components/ui/skeleton";
+
+const DynamicMap = dynamic(() => import("@/components/properties/PropertyMap"), {
+	ssr: false,
+	loading: () => <Skeleton className="h-[400px] w-full" />,
+});
 
 async function PropertyDetailsPage({ params }: { params: { id: string } }) {
-	const { id } = await params;
-	const property = await fetchPropertyDetails(id);
+	// const { id } = await params;
+	const property = await fetchPropertyDetails(params.id);
 
 	if (!property) redirect("/");
 
