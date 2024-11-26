@@ -14,6 +14,7 @@ import Amenities from "@/components/properties/Amenities";
 // import DynamicMap from "@/app/utils/DynamicMap";
 import dynamic from "next/dynamic";
 import { Skeleton } from "@/components/ui/skeleton";
+import SubmitReview from "@/components/reviews/SubmitReview";
 
 const DynamicMap = dynamic(() => import("@/components/properties/PropertyMap"), {
 	ssr: false,
@@ -60,6 +61,7 @@ async function PropertyDetailsPage({ params }: { params: { id: string } }) {
 					<BookingCalendar />
 				</div>
 			</section>
+			<SubmitReview propertyId={property.id} />
 		</section>
 	);
 }
