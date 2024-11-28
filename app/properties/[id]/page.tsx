@@ -1,4 +1,5 @@
-import { fetchPropertyDetails } from "@/app/utils/actions";
+import { fetchPropertyDetails, findExistingReview } from "@/app/utils/actions";
+import { auth } from "@clerk/nextjs/server";
 import FavoriteToggleButton from "@/components/card/FavoriteToggleButton";
 import PropertyRating from "@/components/card/PropertyRating";
 import BookingCalendar from "@/components/properties/BookingCalendar";
@@ -16,6 +17,7 @@ import dynamic from "next/dynamic";
 import { Skeleton } from "@/components/ui/skeleton";
 import SubmitReview from "@/components/reviews/SubmitReview";
 import PropertyReviews from "@/components/reviews/PropertyReviews";
+import { use } from "react";
 
 const DynamicMap = dynamic(() => import("@/components/properties/PropertyMap"), {
 	ssr: false,
@@ -33,6 +35,20 @@ async function PropertyDetailsPage({ params }: { params: { id: string } }) {
 
 	const firstName = property.profile.firstname; //profile is linked with property
 	const profileImage = property.profile.profileImage;
+
+	const { userId } = await auth(); //await needed?
+	if (!userId) {
+		console.error("User is not authenticated or userId is missing");
+		return null;
+	}
+
+	const isNotOwner = property.profile.clerkId !== userId;
+	const reviewDoesNotExist =
+		userId && isNotOwner && !(await findExistingReview(userId, property.id));
+
+	if (reviewDoesNotExist) {
+		return console.log(`Is reviewDoesNotExist true or false? ${reviewDoesNotExist}`);
+	}
 	return (
 		<section>
 			<BreadCrumbs name={property.name} />
@@ -62,6 +78,7 @@ async function PropertyDetailsPage({ params }: { params: { id: string } }) {
 					<BookingCalendar />
 				</div>
 			</section>
+			{reviewDoesNotExist && <SubmitReview propertyId={property.id} />}
 			<SubmitReview propertyId={property.id} />
 			<PropertyReviews propertyId={property.id} />
 		</section>
