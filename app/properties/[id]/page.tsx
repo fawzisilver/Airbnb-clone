@@ -2,7 +2,7 @@ import { fetchPropertyDetails, findExistingReview } from "@/app/utils/actions";
 import { auth } from "@clerk/nextjs/server";
 import FavoriteToggleButton from "@/components/card/FavoriteToggleButton";
 import PropertyRating from "@/components/card/PropertyRating";
-import BookingCalendar from "@/components/properties/BookingCalendar";
+// import BookingCalendar from "@/components/properties/BookingCalendar";
 import BreadCrumbs from "@/components/properties/BreadCrumbs";
 import ImageContainer from "@/components/properties/ImageContainer";
 import PropertyDetails from "@/components/properties/PropertyDetails";
@@ -18,11 +18,20 @@ import { Skeleton } from "@/components/ui/skeleton";
 import SubmitReview from "@/components/reviews/SubmitReview";
 import PropertyReviews from "@/components/reviews/PropertyReviews";
 import { use } from "react";
+import { log } from "console";
 
 const DynamicMap = dynamic(() => import("@/components/properties/PropertyMap"), {
 	ssr: false,
 	loading: () => <Skeleton className="h-[400px] w-full" />,
 });
+
+const DynamicBookingWrapper = dynamic(
+	() => import("@/components/booking/BookingWrapper"),
+	{
+		ssr: false,
+		loading: () => <Skeleton className="h-[400px] w-full" />,
+	}
+);
 
 async function PropertyDetailsPage({ params }: { params: { id: string } }) {
 	// const { id } = await params;
@@ -49,6 +58,8 @@ async function PropertyDetailsPage({ params }: { params: { id: string } }) {
 	if (reviewDoesNotExist) {
 		return console.log(`Is reviewDoesNotExist true or false? ${reviewDoesNotExist}`);
 	}
+
+	console.log(property.bookings);
 	return (
 		<section>
 			<BreadCrumbs name={property.name} />
@@ -75,7 +86,11 @@ async function PropertyDetailsPage({ params }: { params: { id: string } }) {
 				</div>
 				<div className="lg:col-span-4 flex flex-col items-center">
 					{/* calendar */}
-					<BookingCalendar />
+					<DynamicBookingWrapper
+						propertyId={property.id}
+						price={property.price}
+						bookings={property.bookings}
+					/>
 				</div>
 			</section>
 			{reviewDoesNotExist && <SubmitReview propertyId={property.id} />}
