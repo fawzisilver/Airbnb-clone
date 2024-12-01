@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/table";
 
 import FormContainer from "@/components/form/FormContainer";
-// import { IconButton } from "@/components/form/Buttons";
+import { IconButton } from "@/components/form/Button";
 import { fetchBookings, deleteBookingAction } from "../utils/actions";
 
 async function BookingsPage() {
@@ -63,12 +63,24 @@ async function BookingsPage() {
 								<TableCell>{formatCurrency(orderTotal)}</TableCell>
 								<TableCell>{startDate}</TableCell>
 								<TableCell>{endDate}</TableCell>
+								<TableCell>
+									<DeleteBooking bookingId={id} />
+								</TableCell>
 							</TableRow>
 						);
 					})}
 				</TableBody>
 			</Table>
 		</div>
+	);
+}
+
+function DeleteBooking({ bookingId }: { bookingId: string }) {
+	const deleteBooking = deleteBookingAction.bind(null, { bookingId });
+	return (
+		<FormContainer action={deleteBooking}>
+			<IconButton actionType="delete" />
+		</FormContainer>
 	);
 }
 
