@@ -4,7 +4,7 @@ import { fetchRentals, deleteRentalAction } from "../utils/actions";
 import FormContainer from "@/components/form/FormContainer";
 import { IconButton } from "@/components/form/Button";
 
-import { formatDate, formatCurrency } from "../utils/format";
+import { formatCurrency } from "../utils/format";
 import {
 	Table,
 	TableBody,

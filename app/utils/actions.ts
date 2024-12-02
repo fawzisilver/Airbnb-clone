@@ -556,6 +556,24 @@ export const deleteRentalAction = async (prevState: { propertyId: string }) => {
 		revalidatePath("/rentals");
 		return { message: "Rental deleted successfully" };
 	} catch (error) {
-		renderError(error);
+		return renderError(error);
 	}
+};
+
+export const fetchRentalDetails = async (propertyId: string) => {
+	const user = await getAuthUser();
+	return db.property.findUnique({
+		where: {
+			id: propertyId,
+			profileId: user.id,
+		},
+	});
+};
+
+export const updatePropertyAction = async () => {
+	return { message: "update property action" };
+};
+
+export const updatePropertyImageAction = async () => {
+	return { message: "update property image" };
 };
