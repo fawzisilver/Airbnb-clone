@@ -4,7 +4,6 @@ import {
 	updatePropertyAction,
 } from "@/app/utils/actions";
 import FormContainer from "@/components/form/FormContainer";
-import FormInput from "@/components/form/FormInput";
 import CategoriesInput from "@/components/form/CategoriesInput";
 import PriceInput from "@/components/form/PriceInput";
 import TextAreaInput from "@/components/form/TextAreaInput";
@@ -16,11 +15,14 @@ import { redirect } from "next/navigation";
 import { type Amenity } from "@/app/utils/amenities";
 import ImageInputContainer from "@/components/form/ImageInputContainer";
 import { Textarea } from "@/components/ui/textarea";
+import FormInput from "@/components/form/Forminput";
 
 async function EditRentalPage({ params }: { params: { id: string } }) {
 	const property = await fetchRentalDetails(params.id);
 
 	if (!property) redirect("/"); //go back home if no property
+
+	const defaultAmenities: Amenity[] = JSON.parse(property.amenities);
 	return (
 		<section>
 			<h1 className="text-2xl font-semibold mb-8 capitalize">Edit Property</h1>
@@ -34,12 +36,12 @@ async function EditRentalPage({ params }: { params: { id: string } }) {
 					<input type="hidden" name="id" value={property.id} />
 				</ImageInputContainer>
 				<FormContainer action={updatePropertyAction}>
-					<input type="hidden" value={property.id} />
+					<input type="hidden" name="id" value={property.id} />
 					<div className="grid md:grid-cols-2 gap-8 mb-4 mt-8">
 						<FormInput
 							name="name"
 							type="text"
-							label="Name (20 limit"
+							label="Name (20 limit)"
 							defaultValue={property.name}
 						/>
 						<FormInput
@@ -62,6 +64,9 @@ async function EditRentalPage({ params }: { params: { id: string } }) {
 					<CounterInput detail="bedrooms" defaultValue={property.bedrooms} />
 					<CounterInput detail="beds" defaultValue={property.beds} />
 					<CounterInput detail="baths" defaultValue={property.baths} />
+
+					<h3 className="text-lg mt-10 mb-6 font-medium">Amenities</h3>
+					<AmenitiesInput defaultValue={defaultAmenities} />
 					<SubmitButton text="edit property" className="mt-12" />
 				</FormContainer>
 			</div>
