@@ -1,6 +1,6 @@
 import React from "react";
 
-function ChartsContainer() {
+async function ChartsContainer() {
 	return <div>ChartsContainer</div>;
 }
 
