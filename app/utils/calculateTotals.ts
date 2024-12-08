@@ -17,3 +17,5 @@ export const calculateTotals = ({ checkIn, checkOut, price }: BookingDetails) =>
 
 	return { totalNights, subTotal, cleaning, service, tax, orderTotal };
 };
+
+
