@@ -1,7 +1,12 @@
+import { fetchChartsData } from "@/app/utils/actions";
 import React from "react";
+import Chart from "./Chart";
 
 async function ChartsContainer() {
-	return <div>ChartsContainer</div>;
+	const bookings = await fetchChartsData();
+
+	if (bookings.length < 1) return null;
+	return <Chart data={bookings} />;
 }
 
 export default ChartsContainer;
