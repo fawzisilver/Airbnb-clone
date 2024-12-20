@@ -1,9 +1,9 @@
 const nextConfig = {
-	experimental: {
-		serverActions: {
-			allowedOrigins: ["*"],
-		},
-	},
+	// experimental: {
+	// 	serverActions: {
+	// 		allowedOrigins: ["*"],
+	// 	},
+	// },
 	images: {
 		remotePatterns: [
 			{

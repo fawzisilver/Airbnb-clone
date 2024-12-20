@@ -46,10 +46,10 @@ async function PropertyDetailsPage({ params }: { params: { id: string } }) {
 	const profileImage = property.profile.profileImage;
 
 	const { userId } = await auth(); //await needed?
-	if (!userId) {
-		console.error("User is not authenticated or userId is missing");
-		return null;
-	}
+	// if (!userId) {
+	// 	console.error("User is not authenticated or userId is missing");
+	// 	return null;
+	// }
 
 	const isNotOwner = property.profile.clerkId !== userId;
 	const reviewDoesNotExist =
